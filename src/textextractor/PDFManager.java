@@ -12,6 +12,7 @@ import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import java.util.List;
  * @author Tmar bilel
  */
 class PDFManager {
+
+    ArrayList listPdf = new ArrayList();
 
     public PDFManager() {
     }
@@ -53,13 +56,15 @@ class PDFManager {
      * @param pdf the original PDF
      * @throws IOException
      */
-    public void parsePdf(String pdf) throws IOException {
+    public ArrayList parsePdf(String pdf) throws IOException {
         PdfReader reader = new PdfReader(pdf);
         PdfReaderContentParser parser = new PdfReaderContentParser(reader);
         TextExtractionStrategy strategy;
         for (int i = 1; i <= reader.getNumberOfPages(); i++) {
             strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
             System.out.println(strategy.getResultantText());
+            listPdf.add(strategy.getResultantText());
         }
+        return listPdf;
     }
 }
